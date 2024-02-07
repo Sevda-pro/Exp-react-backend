@@ -114,7 +114,7 @@ app.post('/check',async (req, res) => {
             subject: "Registration NavLink",
             textContent: "NavLink Below",
             htmlContent: `<h3>Hi! We got the request from you. Here is the NavLink below >>></h3>
-            <a href="process.env.REACT_APP_API_KEY/check/completed"> Click Here</a>`,
+            <a href="${process.env.BASE_URL}/check/completed"> Click Here</a>`,
       });
         return res.status(200).json({
             message:
