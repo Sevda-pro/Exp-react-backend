@@ -4,6 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 const bcrypt = require("bcrypt");
 const Sib = require("sib-api-v3-sdk");
 require('dotenv').config()
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
 const forgotPassword = async (req, res, next) => {
     try {
         const email = req.body.email;
@@ -42,10 +43,7 @@ const forgotPassword = async (req, res, next) => {
             subject: "Expense Tracker Reset Password",
             textContent: "Link Below",
             htmlContent: `<h3>Hi! We got the request from you for reset the password. Here is the link below >>></h3>
-            <a href="${process.env.BASE_URL}/resetPassword/${params.requestId}"> Click Here</a>`,
-            params: {
-                requestId: requestId,
-            },
+            <a href="${BASE_URL}/resetPassword/${requestId}"> Click Here</a>`
         });
         return res.status(200).json({
             message:
@@ -84,7 +82,7 @@ const updatepassword = async (req, res) => {
                     console.log('Hashed Password:', hashedPassword);
 
                     // Update the user's password
-                    await User.updateOne({ _id: find.userId }, { Password: hashedPassword });
+                    await User.updateOne({ _id: find.userId }, { password: hashedPassword });
 
                     res.status(201).json({ message: "Successfully updated the new password" });
                 } catch (hashError) {

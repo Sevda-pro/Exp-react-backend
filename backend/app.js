@@ -19,6 +19,8 @@ app.use('/password',password_route)
 require('dotenv').config()
 app.use(bodyParser.urlencoded({ extended: true }));
 const PORT=process.env.PORT || 5000
+const OWN_URL = process.env.OWN_URL || 'http://localhost:5000'
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
 const authentication = async (req, res, next) => {
 	try {
 
@@ -114,7 +116,7 @@ app.post('/check',async (req, res) => {
             subject: "Registration NavLink",
             textContent: "NavLink Below",
             htmlContent: `<h3>Hi! We got the request from you. Here is the NavLink below >>></h3>
-            <a href="${process.env.BASE_URL}/check/completed"> Click Here</a>`,
+            <a href="${OWN_URL}/completed"> Click Here</a>`,
       });
         return res.status(200).json({
             message:
@@ -125,8 +127,8 @@ app.post('/check',async (req, res) => {
         return res.status(409).json({ error,message: "failed registration" });
     }
 });
-app.get('/check/completed',async(req,res)=>{
-	res.redirect(`${process.env.BASE_URL}/login`);
+app.get('/completed',async(req,res)=>{
+	res.redirect(`${BASE_URL}/login`);
 })
 
 const apprun = () => {
